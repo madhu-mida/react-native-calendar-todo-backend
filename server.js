@@ -38,6 +38,19 @@ app.get("/getEventByDate/:selectedDate", async (req, res) => {
     }
 })
 
+app.get("/getEventByDateRange/:startDate/:endDate", async (req, res) => {
+    try {
+        res.status(200).json(await Event.find({
+            "date": {
+                "$gte": new Date(req.params.startDate),
+                "$lt": new Date(req.params.endDate)
+            }
+        }))
+    } catch (error) {
+        res.status(400).json(error)
+    }
+})
+
 
 // Server Listener
 
